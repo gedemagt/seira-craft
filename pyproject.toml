@@ -8,6 +8,7 @@ packages = [{include = "seira_craft"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+ruff = "^0.0.284"
 
 
 [tool.poetry.group.dev.dependencies]

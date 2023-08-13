@@ -1,10 +1,10 @@
 from copy import deepcopy
-from typing import Any, Dict
+from typing import Any, Dict, Generic
 
 from seira_craft.crafter import Crafter, T
 
 
-class DefaultCrafter(Crafter):
+class DefaultCrafter(Crafter[T], Generic[T]):
     def __init__(self, start_att: str = "start", end_att: str = "end"):
         self.start_att = start_att
         self.end_att = end_att

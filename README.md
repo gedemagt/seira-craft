@@ -38,8 +38,8 @@ class Segment:
         return Segment(self.start, self.end, self.val)
 
 
-crafter = DefaultCrafter()
-seq = Sequence(crafter)
+crafter = DefaultCrafter[Segment]()
+seq = Sequence[Segment](crafter)
 
 seq.insert(Segment(
     start=datetime(2023, 1, 1, 1), 

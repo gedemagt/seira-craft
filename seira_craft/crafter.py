@@ -26,9 +26,9 @@ class Crafter(ABC, Generic[T]):
     ) -> T:
         pass
 
-    def translate(self, instance: T, delta: Any) -> T:
+    def translate(self, instance: T, delta: Any, **kwargs) -> T:
         return self.copy(
-            instance, self.get_start(instance) + delta, self.get_end(instance) + delta
+            instance, self.get_start(instance) + delta, self.get_end(instance) + delta, **kwargs
         )
 
     def check_for_overlaps(
@@ -93,7 +93,7 @@ class Crafter(ABC, Generic[T]):
                 |--c--|
                         |--v--|
                 """
-                result.append(self.copy(v, **kwargs))
+                result.append(self.copy(v))
             elif v_start < c_start < v_end <= c_end:
                 """
                    |--c--|

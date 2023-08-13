@@ -6,7 +6,7 @@ from seira_craft.crafter import Crafter
 T = TypeVar("T")
 
 
-class Seira(Generic[T]):
+class Sequence(Generic[T]):
     def __init__(
         self,
         crafter: Crafter[T],
@@ -20,19 +20,19 @@ class Seira(Generic[T]):
                 self._sequences[group_by(instance)].append(instance)
         self._group_by = group_by if group_by else lambda _: 1
 
-    def insert(self, new_instance: T, **kwargs) -> "Seira":
+    def insert(self, new_instance: T, **kwargs) -> "Sequence":
         key = self._group_by(new_instance)
         self._sequences[key] = self.crafter.insert(
             new_instance, self._sequences[key], **kwargs
         )
         return self
 
-    def repeat(self, times: int) -> "Seira":
+    def repeat(self, times: int) -> "Sequence":
         for key, val in self._sequences.items():
             self._sequences[key] = self.crafter.repeat(val, times)
         return self
 
-    def repeat_all(self, times: int) -> "Seira":
+    def repeat_all(self, times: int) -> "Sequence":
         for key, val in self._sequences.items():
             self._sequences[key] = self.crafter.repeat_all(val, times)
         return self

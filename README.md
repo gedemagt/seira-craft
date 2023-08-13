@@ -1,13 +1,6 @@
 # Siera Craft
 
-**Siera Craft** is a Python package designed for managing and manipulating sequences with items that span intervals.
-
-## Features
-
-- Handle sequences of items that span specific intervals.
-- Detect and manage overlaps within sequences.
-- Flexibly insert and manipulate sequence items.
-- Default and customizable handlers (`Crafters`) for different sequence types.
+**Siera Craft** is a Python package to help craft and manipulate sequences.
 
 ## Installation
 
@@ -28,27 +21,40 @@ poetry add siera-craft
 ### Basic Example
 
 ```python
-from seira_craft.seira import Seira
+from datetime import datetime
+
 from seira_craft.default import DefaultCrafter
+from seira_craft.seira import Sequence
+from dataclasses import dataclass
 
-# Initialize a DefaultCrafter
+
+@dataclass
+class Segment:
+    start: datetime
+    end: datetime
+    val: str
+
+    def copy(self):
+        return Segment(self.start, self.end, self.val)
+
+
 crafter = DefaultCrafter()
+seq = Sequence(crafter)
 
-# Sample sequence of items (modify as per your data structure)
-sequence = [...]
+seq.insert(Segment(
+    start=datetime(2023, 1, 1, 1), 
+    end=datetime(2023, 1, 1, 2),
+    val="First Interval"
+))
 
-# Initialize Siera with the crafter and sequence
-s = Seira(crafter, sequence=sequence)
+seq.insert(Segment(
+    start=datetime(2023, 1, 1, 1, 30), 
+    end=datetime(2023, 1, 1, 2, 30),
+    val="Second Interval"
+))
 
-# Manipulate sequence using Siera methods
-...
+print(seq.sequence())
 ```
-
-For detailed documentation and advanced usage, please refer to the respective module documentation.
-
-## Contribute
-
-Contributions are welcome! Feel free to open issues for feature requests, bug reports, or submit pull requests.
 
 ## License
 

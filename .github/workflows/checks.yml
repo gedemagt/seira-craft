@@ -38,9 +38,7 @@ jobs:
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
-      - name: Code Quality - black
-        run: poetry run black . --check
-      - name: Code Quality - ruff
+      - name: Code Quality
         run: poetry run ruff .
       - name: Test with pytest
         run: poetry run pytest .

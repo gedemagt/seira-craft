@@ -28,7 +28,8 @@ class Crafter(ABC, Generic[T]):
 
     def translate(self, instance: T, delta: Any, **kwargs) -> T:
         return self.copy(
-            instance, self.get_start(instance) + delta, self.get_end(instance) + delta, **kwargs
+            instance, self.get_start(instance) + delta,
+            self.get_end(instance) + delta, **kwargs
         )
 
     def check_for_overlaps(

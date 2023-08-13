@@ -1,19 +1,15 @@
-# Siera Craft
+# Seira Craft
 
-**Siera Craft** is a Python package to help craft and manipulate sequences.
+A Python package to help craft and manipulate sequences.
 
 ## Installation
 
-### Using pip
-
 ```bash
-pip install siera-craft
+pip install seira-craft
 ```
-
-### Using poetry
-
+or
 ```bash
-poetry add siera-craft
+poetry add seira-craft
 ```
 
 ## Usage

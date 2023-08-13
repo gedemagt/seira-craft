@@ -3,14 +3,13 @@ name: Publish
 on:
   workflow_run:
     workflows: ["Checks"]
-    branches: [main]
     types:
       - completed
-  release:
-    types: [published]
-  push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+(rc[0-9]+)?'
+    release:
+      types: [published]
+    push:
+      tags:
+        - 'v[0-9]+.[0-9]+.[0-9]+(rc[0-9]+)?'
 
 jobs:
   test:
@@ -49,5 +48,5 @@ jobs:
           poetry run pip install toml-cli
       - name: Build and publish
         run: |
-          toml set --toml-path pyproject.toml tool.poetry.version $(cut -d '-' -f 1 <<< ${{github.ref_name}})
+          poetry run toml set --toml-path pyproject.toml tool.poetry.version $(cut -d '-' -f 1 <<< ${{github.ref_name}})
           poetry publish --build

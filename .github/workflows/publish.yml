@@ -49,5 +49,3 @@ jobs:
           poetry publish --build
           git status
       - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: [Auto] Bumping version to match release

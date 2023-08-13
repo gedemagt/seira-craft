@@ -1,15 +1,13 @@
-name: Publish
+name: Checks
 
-on:
-  release:
-    types: [published]
-  push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+(rc[0-9]+)?'
+on: [push]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [ '3.8', '3.9', '3.10', '3.11' ]
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -17,7 +15,7 @@ jobs:
         id: setup-python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: ${{ matrix.version }}
       - name: Load cached Poetry installation
         id: cached-poetry
         uses: actions/cache@v3
@@ -40,7 +38,9 @@ jobs:
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
-      - name: Build and publish
-        run: |
-          toml set --toml-path pyproject.toml tool.poetry.version $(cut -d '-' -f 1 <<< ${{github.ref_name}})
-          poetry publish --build
+      - name: Code Quality - black
+        run: poetry run black . --check
+      - name: Code Quality - ruff
+        run: poetry run ruff .
+      - name: Test with pytest
+        run: poetry run pytest .

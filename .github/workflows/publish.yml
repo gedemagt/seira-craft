@@ -1,6 +1,11 @@
 name: Publish
 
 on:
+  workflow_run:
+    workflows: ["Checks"]
+    branches: [main]
+    types:
+      - completed
   release:
     types: [published]
   push:

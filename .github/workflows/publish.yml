@@ -51,5 +51,5 @@ jobs:
       - name: Bump version
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: [Auto] Bumping version to match release - ${{github.ref_name}}
+          commit_message: [Auto] Bumping version to match release
           file_pattern: 'pyproject.toml'

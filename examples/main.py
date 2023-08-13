@@ -1,6 +1,6 @@
 from seira_craft.default import DictCrafter
 
-from seira_craft.siera import Siera
+from seira_craft.seira import Seira
 
 sequence = [
     dict(start=1, end=4, val=10),
@@ -13,7 +13,7 @@ crafter = DictCrafter(deep_copy=True)
 
 crafter.check_for_overlaps(sequence)
 
-sequence = Siera(crafter)
+sequence = Seira(crafter)
 r = (
     sequence.insert(dict(start=0, end=1, val=9))
     .insert(dict(start=5, end=7, val=10))

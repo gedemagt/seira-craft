@@ -28,7 +28,7 @@ poetry add siera-craft
 ### Basic Example
 
 ```python
-from seira_craft.siera import Siera
+from seira_craft.seira import Seira
 from seira_craft.default import DefaultCrafter
 
 # Initialize a DefaultCrafter
@@ -38,7 +38,7 @@ crafter = DefaultCrafter()
 sequence = [...]
 
 # Initialize Siera with the crafter and sequence
-s = Siera(crafter, sequence=sequence)
+s = Seira(crafter, sequence=sequence)
 
 # Manipulate sequence using Siera methods
 ...

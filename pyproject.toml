@@ -4,7 +4,7 @@ version = "0.0.1"
 description = "A python package to help craft and manipulate sequences."
 authors = ["Jesper Halkjær Jensen <mail@jeshj.com>"]
 readme = "README.md"
-homepage = "https://https://github.com/gedemagt/seira-craft"
+homepage = "https://github.com/gedemagt/seira-craft"
 packages = [{include = "seira_craft"}]
 
 [tool.poetry.dependencies]

@@ -5,8 +5,7 @@ from seira_craft.crafter import Crafter, T
 
 
 class DefaultCrafter(Crafter):
-
-    def __init__(self, start_att: str = 'start', end_att: str = 'end'):
+    def __init__(self, start_att: str = "start", end_att: str = "end"):
         self.start_att = start_att
         self.end_att = end_att
 
@@ -16,7 +15,9 @@ class DefaultCrafter(Crafter):
     def get_end(self, instance: T) -> Any:
         return getattr(instance, self.end_att)
 
-    def copy(self, instance: T, new_start: Any = None, new_end: Any = None, **kwargs) -> T:
+    def copy(
+        self, instance: T, new_start: Any = None, new_end: Any = None, **kwargs
+    ) -> T:
         new = instance.copy()
         if new_start:
             setattr(new, self.start_att, new_start)
@@ -29,8 +30,9 @@ class DefaultCrafter(Crafter):
 
 
 class DictCrafter(Crafter[Dict]):
-
-    def __init__(self, start_att: str = 'start', end_att: str = 'end', deep_copy: bool = False):
+    def __init__(
+        self, start_att: str = "start", end_att: str = "end", deep_copy: bool = False
+    ):
         self.start_att = start_att
         self.end_att = end_att
         self.deep_copy = deep_copy
@@ -41,7 +43,9 @@ class DictCrafter(Crafter[Dict]):
     def get_end(self, instance: Dict) -> Any:
         return instance[self.end_att]
 
-    def copy(self, instance: Dict, new_start: Any = None, new_end: Any = None, **kwargs) -> T:
+    def copy(
+        self, instance: Dict, new_start: Any = None, new_end: Any = None, **kwargs
+    ) -> T:
         if self.deep_copy:
             new_instance = deepcopy(instance)
         else:

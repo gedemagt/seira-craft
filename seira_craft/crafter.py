@@ -6,14 +6,12 @@ T = TypeVar("T")
 
 
 class OverlapException(Exception):
-
     def __init__(self, msg: str, overlaps: List[T]):
         super().__init__(msg)
         self.overlaps = overlaps
 
 
 class Crafter(ABC, Generic[T]):
-
     @abstractmethod
     def get_start(self, instance: T) -> Any:
         pass
@@ -23,19 +21,26 @@ class Crafter(ABC, Generic[T]):
         pass
 
     @abstractmethod
-    def copy(self, instance: T, new_start: Any = None, new_end: Any = None, **kwargs) -> T:
+    def copy(
+        self, instance: T, new_start: Any = None, new_end: Any = None, **kwargs
+    ) -> T:
         pass
 
     def translate(self, instance: T, delta: Any) -> T:
-        return self.copy(instance, self.get_start(instance) + delta, self.get_end(instance) + delta)
+        return self.copy(
+            instance, self.get_start(instance) + delta, self.get_end(instance) + delta
+        )
 
-    def check_for_overlaps(self, sequence: List[T], group_by: Callable[[T], Any] = None):
-
+    def check_for_overlaps(
+        self, sequence: List[T], group_by: Callable[[T], Any] = None
+    ):
         sorted_sequence = sorted(sequence, key=self.get_start)
 
         overlaps = []
 
-        for k, v in itertools.groupby(sorted_sequence, key=group_by if group_by else lambda _: 1):
+        for k, v in itertools.groupby(
+            sorted_sequence, key=group_by if group_by else lambda _: 1
+        ):
             sub_sequence = list(v)
             for x, y in zip(sub_sequence[:-1], sub_sequence[1:]):
                 if self.overlaps(x, y):
@@ -44,11 +49,18 @@ class Crafter(ABC, Generic[T]):
             raise OverlapException(f"Sequence has {len(overlaps)} overlaps", overlaps)
 
     def overlaps(self, i1: T, i2: T) -> bool:
-
-        overlap = min(self.get_end(i1), self.get_end(i2)) - max(self.get_start(i1), self.get_start(i2))
+        overlap = min(self.get_end(i1), self.get_end(i2)) - max(
+            self.get_start(i1), self.get_start(i2)
+        )
         return overlap > 0
 
-    def insert(self, new_instance: T, sequence: List[T], group_by: Callable[[T], Hashable] = None, **kwargs) -> List[T]:
+    def insert(
+        self,
+        new_instance: T,
+        sequence: List[T],
+        group_by: Callable[[T], Hashable] = None,
+        **kwargs,
+    ) -> List[T]:
         result = []
         if group_by:
             to_merge_into = []
@@ -65,7 +77,6 @@ class Crafter(ABC, Generic[T]):
         return result
 
     def _insert_into_sequence(self, new_instance: T, sequence: List[T], **kwargs):
-
         c_start = self.get_start(new_instance)
         c_end = self.get_end(new_instance)
 
@@ -114,7 +125,9 @@ class Crafter(ABC, Generic[T]):
             prev_start = self.get_start(prev)
             prev_end = self.get_end(prev)
             delta = prev_end - prev_start
-            sequence.append(self.copy(prev, new_start=prev_end, new_end=prev_end + delta))
+            sequence.append(
+                self.copy(prev, new_start=prev_end, new_end=prev_end + delta)
+            )
         return sequence
 
     def repeat_all(self, sequence: List[T], times: int) -> List[T]:
@@ -123,7 +136,5 @@ class Crafter(ABC, Generic[T]):
         sub_seq = sequence.copy()
         for x in range(times):
             for y in sub_seq:
-                sequence.append(
-                    self.translate(y, delta * (x + 1))
-                )
+                sequence.append(self.translate(y, delta * (x + 1)))
         return sequence

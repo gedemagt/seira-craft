@@ -47,3 +47,9 @@ jobs:
           poetry run toml set --toml-path pyproject.toml tool.poetry.version $(cut -d '-' -f 1 <<< ${{github.ref_name}})
           poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
           poetry publish --build
+          git status
+      - name: Bump version
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: [Auto] Bumping version to match release - ${{github.ref_name}}
+          file_pattern: 'pyproject.toml'

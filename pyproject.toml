@@ -4,8 +4,10 @@ version = "0.0.1"
 description = "A python package to help craft and manipulate sequences."
 authors = ["Jesper Halkjær Jensen <mail@jeshj.com>"]
 readme = "README.md"
-homepage = "https://github.com/gedemagt/seira-craft"
+repository = "https://github.com/gedemagt/seira-craft"
 packages = [{include = "seira_craft"}]
+license = "MIT"
+keywords = ["sequence", "interval"]
 
 [tool.poetry.dependencies]
 python = "^3.7"

@@ -48,8 +48,6 @@ jobs:
           poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
           poetry publish --build
           git status
-      - name: Bump version
-        uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: [Auto] Bumping version to match release
-          file_pattern: 'pyproject.toml'
